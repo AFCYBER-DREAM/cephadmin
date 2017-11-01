@@ -1,0 +1,63 @@
+---
+
+dummy:
+
+###########
+# GENERAL #
+###########
+fetch_directory: {{ ansible_keys_dir }}
+cluster: ceph
+
+###########
+# INSTALL #
+###########
+mon_group_name: mons
+osd_group_name: osds
+rgw_group_name: rgws
+mds_group_name: mdss
+check_firewall: False
+
+
+ceph_rhcs: true
+ceph_rhcs_version: {{ rh_ceph_version }}
+ceph_origin: distro
+ceph_rhcs_repository_path: "/etc/yum.repos.d/ceph.repo"
+
+## Ceph options
+generate_fsid: true
+cephx: true
+
+## Monitor options
+monitor_interface: {{ monitor_interface }}
+
+## OSD options
+journal_size: 10240
+public_network: {{ ceph_public_network }}
+cluster_network: {{ ceph_cluster_network }}
+osd_mkfs_type: xfs
+osd_mkfs_options_xfs: -f -i size=2048
+osd_mount_options_xfs: noatime,largeio,inode64,swalloc
+osd_objectstore: filestore
+
+## Rados Gateway options
+radosgw_civetweb_port: 80
+radosgw_frontend: civetweb
+radosgw_civetweb_bind_ip: 0.0.0.0
+radosgw_civetweb_num_threads: 250
+
+###################
+# CONFIG OVERRIDE #
+###################
+ceph_conf_overrides:
+  global:
+    mon_osd_allow_primary_affinity: true
+    osd_pool_default_size: 2
+    osd_pool_default_min_size: 1
+    mon_pg_warn_min_per_osd: 0
+    mon_pg_warn_max_per_osd: 0
+    mon_pg_warn_max_object_skew: 0
+  client:
+    rbd_default_features: 1
+    rbd_default_format: 2
+    rbd_cache: "true"
+    rbd_cache_writethrough_until_flush: "false"

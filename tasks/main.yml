@@ -1,0 +1,45 @@
+---
+- include: ceph-repos.yml
+
+- name: Install Ceph related packages
+  yum:
+    name: "{{ item }}"
+  with_items: "{{ packages_to_install }}"
+
+- name: Create ceph files
+  template:
+    src: "{{ item }}.yml.j2"
+    dest: "/usr/share/ceph-ansible/group_vars/{{ item }}.yml"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - all
+    - mons
+    - rgws
+
+- name: Create osd file
+  template:
+    src: "osd.yml.j2"
+    dest: "/usr/share/ceph-ansible/group_vars/osd.yml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create site.yml
+  file:
+    src: "site.yml"
+    dest: "/usr/share/ceph-ansible/group_vars/"
+    state: file
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create roots ansible config
+  file:
+    src: "ansible.cfg"
+    dest: "/root/.ansible.cfg"
+    state: file
+    owner: root
+    group: root
+    mode: 644
