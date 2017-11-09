@@ -25,7 +25,7 @@ copy_admin_key: true
 ####################
 # OSD CRUSH LOCATION
 ####################
-
+{% raw %}
 # The following options will build a ceph.conf with OSD sections
 # Example:
 # [osd.X]
@@ -39,13 +39,16 @@ copy_admin_key: true
 
 #crush_location: false
 #osd_crush_location: "'root={{ ceph_crush_root }} rack={{ ceph_crush_rack }} host={{ ansible_hostname }}'"
+{% endraw %}
 
 ##############
 # CEPH OPTIONS
 ##############
 
 # ACTIVATE THE FSID VARIABLE FOR NON-VAGRANT DEPLOYMENT
+{% raw %}
 fsid: "{{ cluster_uuid.stdout }}"
+{% endraw %}
 cephx: true
 
 # Devices to be used as OSDs
@@ -62,10 +65,15 @@ cephx: true
 # Declare devices
 # All the scenarii inherit from the following device declaration
 
+{% if osd_devices is defined %}
+{% for device in osd_devices %}
 devices:
-{% for drive in devices %}
-  - /dev/{{ drive.device }}
+  - /dev/{{ device.drive }}
 {% endfor %}
+{% else %}
+# devices:
+#  - /dev/sdb
+{% endif %}
 
 # Device discovery is based on the Ansible fact 'ansible_devices'
 # which reports all the devices on a system. If chosen all the disks
@@ -94,10 +102,15 @@ devices:
 # 2. Progressively add new devices
 
 raw_multi_journal: true
+{% if osd_devices is defined %}
+{% for device in osd_devices %}
 raw_journal_devices:
-{% for drive in devices %}
-  - /dev/{{ drive.journal }}
+  - /dev/{{ device.journal }}
 {% endfor %}
+{% else %}
+# raw_journal_devices:
+#  - /dev/sdc
+{% endif %}
 
 # IV. Fourth scenario: use directory instead of disk for OSDs
 # Use 'true' to enable this scenario

@@ -18,8 +18,10 @@ fetch_directory: {{ ansible_keys_dir }}
 mon_group_name: mons
 
 # ACTIVATE BOTH FSID AND MONITOR_SECRET VARIABLES FOR NON-VAGRANT DEPLOYMENT
+{% raw %}
 fsid: "{{ cluster_uuid.stdout }}"
 monitor_secret: "{{ monitor_keyring.stdout }}"
+{% endraw %}
 cephx: true
 
 # CephFS
@@ -46,7 +48,7 @@ cephx: true
 #############
 # OPENSTACK #
 #############
-
+{% raw %}
 #openstack_config: false
 #openstack_glance_pool:
 #  name: images
@@ -65,6 +67,7 @@ cephx: true
 #  - { name: client.glance, value: "mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool={{ openstack_glance_pool.name }}'" }
 #  - { name: client.cinder, value: "mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool={{ openstack_cinder_pool.name }}, allow rwx pool={{ openstack_nova_pool.name }}, allow rx pool={{ openstack_glance_pool.name }}'"  }
 #  - { name: client.cinder-backup, value: "mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool={{ openstack_cinder_backup_pool.name }}'" }
+{% endraw %}
 
 ##########
 # DOCKER #
