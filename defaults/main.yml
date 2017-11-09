@@ -5,9 +5,13 @@ packages_to_install:
   - ansible
   - ceph-ansible
 
-rhcs_version: 2.3
+rhcs_version: '2.3'
 rh_ceph_version: "{{ rhcs_version.split('.')[0] }}"
 
-devices:
-  - device: sda
-    journal: nvme0n1
+osd_devices:
+  - drive: sdb
+    journal: sdc
+
+ansible_keys_dir: /root/ceph-ansible-keys
+
+monitor_interface: eth0
