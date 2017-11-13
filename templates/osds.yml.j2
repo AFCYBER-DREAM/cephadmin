@@ -66,8 +66,8 @@ cephx: true
 # All the scenarii inherit from the following device declaration
 
 {% if osd_devices is defined %}
-{% for device in osd_devices %}
 devices:
+{% for device in osd_devices %}
   - /dev/{{ device.drive }}
 {% endfor %}
 {% else %}
@@ -103,8 +103,8 @@ devices:
 
 raw_multi_journal: true
 {% if osd_devices is defined %}
-{% for device in osd_devices %}
 raw_journal_devices:
+{% for device in osd_devices %}
   - /dev/{{ device.journal }}
 {% endfor %}
 {% else %}

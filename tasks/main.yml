@@ -1,5 +1,5 @@
 ---
-- include: ceph-repos.yml
+- import_tasks: ceph-repos.yml
 
 - name: Install Ceph related packages
   yum:
@@ -22,7 +22,7 @@
 - name: Copy site.yml
   copy:
     src: "site.yml"
-    dest: "/usr/share/ceph-ansible/group_vars/"
+    dest: "/usr/share/ceph-ansible/site.yml"
     owner: root
     group: root
     mode: 0644

@@ -20,8 +20,8 @@ The default variables are stored in **defaults/main.yml** and are:
 * monitor_interface: Which network interface the monitor will be listening on.
 * ceph_mon_rpms: Enable or disable this repository. Default is yes.
 * ceph_osd_rpms: Enable or disable this repository. Default is yes.
-* ceph_console_rpms: Enable or disable this repository. Default is yes.
 * ceph_installer_rpms: Enable or disable this repository. Default is yes.
+* ceph_tools_rpms: Enable or disable this repository. Default is yes.
 
 osd_devices example:
 
@@ -45,7 +45,7 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - include: infrastructure.yml
+    - import_playbook: infrastructure.yml
 
     - name: Set up a ceph-admin node
       hosts: ceph-admin

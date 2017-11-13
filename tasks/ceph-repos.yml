@@ -15,19 +15,9 @@
     name: ceph-osd-rpms
     description: Ceph Osd YUM repo
     file: ceph
-    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhceph-{{ rh_ceph_version }}-osds-rpms"
+    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhceph-{{ rh_ceph_version }}-osd-rpms"
     gpgcheck: no
     enabled: "{{ ceph_osd_rpms | default('yes') }}"
-  when: reposerver is defined
-
-- name: Add Red Hat ceph-console-rpms
-  yum_repository:
-    name: ceph-console-rpms
-    description: Ceph Console YUM repo
-    file: ceph
-    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhceph-{{ rh_ceph_version }}-console-rpms"
-    gpgcheck: no
-    enabled: "{{ ceph_console_rpms | default('yes') }}"
   when: reposerver is defined
 
 - name: Add Red Hat ceph-installer-rpms
@@ -35,7 +25,17 @@
     name: ceph-installer-rpms
     description: Ceph Installer YUM repo
     file: ceph
-    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhceph-{{ rh_ceph_version }}-installer-rpms"
+    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhscon-{{ rh_ceph_version }}-installer-rpms"
     gpgcheck: no
     enabled: "{{ ceph_installer_rpms | default('yes') }}"
+  when: reposerver is defined
+
+- name: Add Red Hat ceph-tools-rpms
+  yum_repository:
+    name: ceph-tools-rpms
+    description: Ceph Installer YUM repo
+    file: ceph
+    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhceph-{{ rh_ceph_version }}-tools-rpms"
+    gpgcheck: no
+    enabled: "{{ ceph_tools_rpms | default('yes') }}"
   when: reposerver is defined
