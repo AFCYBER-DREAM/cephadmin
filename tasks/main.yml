@@ -6,7 +6,15 @@
     name: "{{ item }}"
   with_items: "{{ packages_to_install }}"
 
-- name: Create ceph files
+- name: Create Ceph fetch directory
+  file:
+    state: directory
+    path: "{{ ansible_keys_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create Ceph files
   template:
     src: "{{ item }}.yml.j2"
     dest: "/usr/share/ceph-ansible/group_vars/{{ item }}.yml"
