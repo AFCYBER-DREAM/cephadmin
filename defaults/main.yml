@@ -1,0 +1,17 @@
+---
+# defaults file for cephadmin
+
+packages_to_install:
+  - ansible
+  - ceph-ansible
+
+rhcs_version: '2.3'
+rh_ceph_version: "{{ rhcs_version.split('.')[0] }}"
+
+osd_devices:
+  - drive: sdb
+    journal: sdc
+
+ansible_keys_dir: /root/ceph-ansible-keys
+
+monitor_interface: eth0

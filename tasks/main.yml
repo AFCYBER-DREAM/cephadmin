@@ -1,0 +1,44 @@
+---
+- import_tasks: ceph-repos.yml
+
+- name: Install Ceph related packages
+  yum:
+    name: "{{ item }}"
+  with_items: "{{ packages_to_install }}"
+
+- name: Create Ceph fetch directory
+  file:
+    state: directory
+    path: "{{ ansible_keys_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create Ceph files
+  template:
+    src: "{{ item }}.yml.j2"
+    dest: "/usr/share/ceph-ansible/group_vars/{{ item }}.yml"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - all
+    - mons
+    - osds
+    - rgws
+
+- name: Copy site.yml
+  copy:
+    src: "site.yml"
+    dest: "/usr/share/ceph-ansible/site.yml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create roots ansible config
+  copy:
+    src: "ansible.cfg"
+    dest: "/root/.ansible.cfg"
+    owner: root
+    group: root
+    mode: 644

@@ -1,0 +1,41 @@
+---
+# tasks file for cephadmin
+- name: Add Red Hat ceph-mon-rpms
+  yum_repository:
+    name: ceph-mon-rpms
+    description: Ceph Mon YUM repo
+    file: ceph
+    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhceph-{{ rh_ceph_version }}-mon-rpms"
+    gpgcheck: no
+    enabled: "{{ ceph_mon_rpms | default('yes') }}"
+  when: reposerver is defined
+
+- name: Add Red Hat ceph-osd-rpms
+  yum_repository:
+    name: ceph-osd-rpms
+    description: Ceph Osd YUM repo
+    file: ceph
+    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhceph-{{ rh_ceph_version }}-osd-rpms"
+    gpgcheck: no
+    enabled: "{{ ceph_osd_rpms | default('yes') }}"
+  when: reposerver is defined
+
+- name: Add Red Hat ceph-installer-rpms
+  yum_repository:
+    name: ceph-installer-rpms
+    description: Ceph Installer YUM repo
+    file: ceph
+    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhscon-{{ rh_ceph_version }}-installer-rpms"
+    gpgcheck: no
+    enabled: "{{ ceph_installer_rpms | default('yes') }}"
+  when: reposerver is defined
+
+- name: Add Red Hat ceph-tools-rpms
+  yum_repository:
+    name: ceph-tools-rpms
+    description: Ceph Installer YUM repo
+    file: ceph
+    baseurl: "http://{{ reposerver }}/repos/rhel-7-server-rhceph-{{ rh_ceph_version }}-tools-rpms"
+    gpgcheck: no
+    enabled: "{{ ceph_tools_rpms | default('yes') }}"
+  when: reposerver is defined

@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Development Range Engineering, Architecture, and Modernization (DREAM) Team
+  description: Role for creating a ceph-admin server used to install and administer a ceph cluster
+  company: AFCYBER
+  license: MIT
+  min_ansible_version: 2.0
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+
+  galaxy_tags: []
+
+dependencies: []
